@@ -13,7 +13,8 @@ SAS Forum: In a column of single letters find consecutive rows that spell gloom
        defined in my autoexec along with months, monthsq ,numbers, numbersq, states50 and states50q
 
     c. Comments and a solution by Nat and Quentin
-
+    
+       WILD UNFINISHED IDEA MAY RELATE TO THIS OR ANOTHER SOLUTION
        Nat Wooding
        nathani@verizon.net
 
