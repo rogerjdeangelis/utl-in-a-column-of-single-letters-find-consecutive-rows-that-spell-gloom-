@@ -2,7 +2,6 @@ SAS Forum: In a column of single letters find consecutive rows that spell gloom
 
   Three solutions
 
-
     a. Without autoexec macro variables -lag4
        4 LAG stacks might work as well as your code that has 4 additional data set i/o buffers.
        In the following random letters are selected via BYTE (only works for ascii sessions)
