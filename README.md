@@ -16,6 +16,7 @@
 
         c. Comments and a solution by Nat and Quentin
 
+           WILD UNFINISHED IDEA MAY RELATE TO THIS OR ANOTHER SOLUTION
            Nat Wooding
            nathani@verizon.net
 
