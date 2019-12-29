@@ -1,6 +1,6 @@
-In a column of single letters find consecutive rows that spell gloom
+SAS Forum: In a column of single letters find consecutive rows that spell gloom
 
-  Two solutions
+  Three solutions
 
 
     a. Without autoexec macro variables -lag4
@@ -12,6 +12,16 @@ In a column of single letters find consecutive rows that spell gloom
     b. With autoexec macro variables - merge
        I forgot that macro variables letters and letterq were
        defined in my autoexec along with months, monthsq ,numbers, numbersq, states50 and states50q
+
+    c. Comments and a solution by Nat and Quentin
+
+       Nat Wooding
+       nathani@verizon.net
+
+       Quentin McMullen
+       qmcmullen.sas@gmail.com
+
+
 
 * AUTOEXEC VARIABLES;
 
@@ -126,16 +136,11 @@ WORK.HAVE total obs=1,000
 * WITHOUT AUTOEXEC VARIABLES;
 
 * easy to add positions and text  'GLOO'
-
 WORK.WANT total obs=1
-
                GLOOM_
               STARTS_
 Obs    LTR       AT
-
  1      M        42
-
-
 * WITH AUTOEXEC VARIABLES;
 
 WORK.WANT total obs=1
@@ -149,7 +154,6 @@ Obs    START    LTR    LTR1    LTR2    LTR3    LTR4
 / __|/ _ \| | | | | __| |/ _ \| '_ \/ __|
 \__ \ (_) | | |_| | |_| | (_) | | | \__ \
 |___/\___/|_|\__,_|\__|_|\___/|_| |_|___/
-
 ;
 * WITHOUT AUTOEXEC VARIABLES;
 
@@ -213,4 +217,41 @@ data want;
         ltr4='M'
   ;
 run;quit;
+
+*                                                  _
+  ___      ___ ___  _ __ ___  _ __ ___   ___ _ __ | |_ ___
+ / __|    / __/ _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __/ __|
+| (__ _  | (_| (_) | | | | | | | | | | |  __/ | | | |_\__ \
+ \___(_)  \___\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__|___/
+
+;
+
+Assuming that we are looking at a single variable, I am starting to kick around a SASHOLE
+approach of using poke to grab the entire string, maybe stick it in a temporary file, and
+then read it with a input and trailing @@, sort of like
+
+Data Gloom;/* the file is this string repeated twice : abcdmoolgefghighlmnop */
+Filename txt "C:\Natsas\PGMS2019\Data\gloom.txt";infile txt lrecl = 32000 ;input @'moolg' A $1.  @@;run;
+I can't recall how to learn the location of the SAS pointer in the string.
+Nat
+
+    On Saturday, December 28, 2019, 06:45:28 PM EST, Quentin McMullen <qmcmullen.sas@gmail.com> wrote:
+
+ Of course where you can LAG, you can also just RETAIN, e.g.:
+
+
+data want ;
+  set have ;
+  retain str ;
+  length str $5 ;
+  str=cat(ltr,str) ;
+  if str="MOOLG" then do
+    gloom_starts_at = _n_ - 4;
+    put gloom_starts_at = ;
+    output;
+  end ;
+run ;
+
+Kind Regards,
+--Q.
 
